@@ -70,13 +70,34 @@ header h1{font-size:clamp(38px,8vw,66px);letter-spacing:.13em;line-height:1.05;m
   padding: 12px 0;
 }
 .clean-view .instrument { width: 100%; }
+.public-status { display: none; }
+.audience-view .public-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  text-align: center;
+  color: #f5dfb7;
+}
+.audience-view .public-status button[hidden],
+.audience-view .view-toggle,
+.solo-view .seq-panel,
+.solo-view .concert,
+.solo-view .controls,
+.solo-view .footer,
+.solo-view .small { display: none; }
+.audience-view main { grid-template-rows: auto 1fr; }
 </style></head><body><main><header><h1><span class="notranslate" translate="no">KALIKO</span><span class="kaliko-sub notranslate" translate="no">KALIMBA COLECTIVA</span></h1><p>Touch instrument · 17 tines · Transformable sounds</p></header><div class="toolbar"><button id="start" class="primary">▶ Enable audio</button><label class="field">Sound palette<select id="voice"><option value="flute">Flute + echo</option><option value="birds">Imaginary birds</option><option value="percussion">Percussion</option><option value="kalimba">Metallic kalimba</option><option value="space">Space atmosphere</option><option value="sample">🎙 My recording</option></select></label><label class="field">Scale<select id="scale"><option value="diatonic">Major · Do Re Mi Fa Sol La Ti</option><option value="naturalminor">Natural minor · Do Re Mi♭ Fa Sol La♭ Ti♭</option><option value="blues">Minor blues · Do Mi♭ Fa Fa♯ Sol Ti♭</option><option value="major">Major pentatonic</option><option value="minor">Minor pentatonic</option></select></label><label class="field">Root note<select id="root"><option value="0">Do</option><option value="2">Re</option><option value="4">Mi</option><option value="5">Fa</option><option value="7">Sol</option><option value="9">La</option></select></label><label class="field">Volume<input id="volume" class="volume" type="range" min="0" max="100" value="55"></label></div><section class="concert" id="concert-panel" aria-label="KALIKO Concert">
 <h2>◉ KALIKO CONCERT · 16</h2>
 <div class="concert-row"><label>Role <select id="concert-role"><option value="host">Director · iPad</option><option value="guest">Audience · phone</option></select></label><label>Room <input id="concert-room" type="text" value="KALIKO" maxlength="24" style="min-width:90px;max-width:130px"></label></div>
 <div class="concert-row"><label style="flex:1">Live server (wss://) <input type="url" id="concert-server" placeholder="wss://kalimba-colectiva.onrender.com" value="wss://kalimba-colectiva.onrender.com" autocomplete="off"></label><button type="button" id="concert-connect">Connect</button></div>
 <div id="concert-host"><div class="concert-row"><button id="concert-permit" type="button">🔒 Audience CLOSED</button><button id="concert-mode" type="button">🎼 Director mode</button></div><div class="concert-row"><label><input type="checkbox" id="concert-stage" checked> Stage audio</label><label><input type="checkbox" id="concert-phones" checked> Phone audio</label></div><div class="concert-row"><button type="button" id="concert-copy">Copy audience link</button><span id="concert-count">0 / 50 connected</span></div><div id="concert-invite" class="concert-message"></div></div>
 <div class="concert-message" id="concert-info" role="status">Concert server configured. Tap Connect to open your room.</div>
-</section><section class="sample-panel" aria-label="Sampler de sonidos"><strong>🎙 SAMPLER · Tu sonido en 17 láminas</strong><div class="sample-actions"><button type="button" id="sample-record">● Record sound</button><button type="button" id="sample-finish" disabled>■ Finish</button><button type="button" id="sample-preview" disabled>▶ Listen</button><label class="sample-file">Import WAV / MP3 <input type="file" id="sample-file" accept="audio/*,.wav,.mp3,.m4a" hidden></label></div><div class="sample-hint" id="sample-status" role="status">Record up to 10 seconds or import a file. Then play the tines.</div></section><div class="status"><span id="light" class="indicator"></span><span id="status">Tap “Enable audio” before playing</span></div><section class="instrument" aria-label="Kalimba de 17 láminas"><div id="tines" class="tines"><button class="tine" style="--length:57%">1</button><button class="tine" style="--length:63%">2</button><button class="tine" style="--length:69%">3</button><button class="tine" style="--length:75%">4</button><button class="tine" style="--length:81%">5</button><button class="tine" style="--length:87%">6</button><button class="tine" style="--length:93%">7</button><button class="tine" style="--length:98%">8</button><button class="tine" style="--length:100%">9</button><button class="tine" style="--length:98%">10</button><button class="tine" style="--length:93%">11</button><button class="tine" style="--length:87%">12</button><button class="tine" style="--length:81%">13</button><button class="tine" style="--length:75%">14</button><button class="tine" style="--length:69%">15</button><button class="tine" style="--length:63%">16</button><button class="tine" style="--length:57%">17</button></div><div class="bridge"></div><div class="soundhole"></div><div class="seq-panel" aria-label="Secuenciador musical">
+</section><section class="sample-panel" aria-label="Sampler de sonidos"><strong>🎙 SAMPLER · Tu sonido en 17 láminas</strong><div class="sample-actions"><button type="button" id="sample-record">● Record sound</button><button type="button" id="sample-finish" disabled>■ Finish</button><button type="button" id="sample-preview" disabled>▶ Listen</button><label class="sample-file">Import WAV / MP3 <input type="file" id="sample-file" accept="audio/*,.wav,.mp3,.m4a" hidden></label></div><div class="sample-hint" id="sample-status" role="status">Record up to 10 seconds or import a file. Then play the tines.</div></section><div class="status"><span id="light" class="indicator"></span><span id="status">Tap “Enable audio” before playing</span></div><div class="public-status">
+  <span id="audience-status" role="status">Conectando al concierto…</span>
+  <button type="button" id="audience-retry" hidden>Reconectar</button>
+</div><section class="instrument" aria-label="Kalimba de 17 láminas"><div id="tines" class="tines"><button class="tine" style="--length:57%">1</button><button class="tine" style="--length:63%">2</button><button class="tine" style="--length:69%">3</button><button class="tine" style="--length:75%">4</button><button class="tine" style="--length:81%">5</button><button class="tine" style="--length:87%">6</button><button class="tine" style="--length:93%">7</button><button class="tine" style="--length:98%">8</button><button class="tine" style="--length:100%">9</button><button class="tine" style="--length:98%">10</button><button class="tine" style="--length:93%">11</button><button class="tine" style="--length:87%">12</button><button class="tine" style="--length:81%">13</button><button class="tine" style="--length:75%">14</button><button class="tine" style="--length:69%">15</button><button class="tine" style="--length:63%">16</button><button class="tine" style="--length:57%">17</button></div><div class="bridge"></div><div class="soundhole"></div><div class="seq-panel" aria-label="Secuenciador musical">
 <div class="seq-tracks" aria-label="Cuatro pistas · doble toque para borrar">
 <button type="button" class="track-choice selected" data-track="0">1 · REC</button>
 <button type="button" class="track-choice" data-track="1">2</button>
@@ -121,7 +142,9 @@ $('sample-record').addEventListener('click',async()=>{
 $('sample-finish').addEventListener('click',()=>{if(sampleRecorder&&sampleRecorder.state==='recording')sampleRecorder.stop()});
 $('sample-preview').addEventListener('click',()=>{if(!init()||!sampleBuffer)return;samplePlay(60,ctx.currentTime+.01)});
 $('sample-file').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;sampleSay('Loading '+f.name+'…');await sampleLoad(await f.arrayBuffer(),f.name);e.target.value=''});
-function play(i,fromSequence=false,atAudioTime=null,sequenceVoice=null){if(!fromSequence && concertConnected && concertRole==='guest' && (!concertAllowed || !concertPhones)){concertSay(!concertAllowed?'Wait for the director to open participation':'Phone sound is muted by the director');if(concertAllowed)concertSendNote(i);return;}if(!fromSequence && typeof concertSendNote==='function')concertSendNote(i);if(seqMode==='record'&&!fromSequence&&ctx){
+function play(i,fromSequence=false,atAudioTime=null,sequenceVoice=null){
+if (audienceView && !fromSequence && !concertConnected) return;
+if(!fromSequence && concertConnected && concertRole==='guest' && (!concertAllowed || !concertPhones)){concertSay(!concertAllowed?'Wait for the director to open participation':'Phone sound is muted by the director');if(concertAllowed)concertSendNote(i);return;}if(!fromSequence && typeof concertSendNote==='function')concertSendNote(i);if(seqMode==='record'&&!fromSequence&&ctx){
  // Capture with the AUDIO clock, including the very first instant after count-in.
  // The visual count-in may still be on screen for one animation tick: it must not eat beat 1.
  const playedAt=ctx.currentTime;
@@ -335,10 +358,19 @@ document.querySelectorAll('.track-mute').forEach(b=>b.addEventListener('click',(
 const concertEls={role:$('concert-role'),room:$('concert-room'),server:$('concert-server'),connect:$('concert-connect'),permit:$('concert-permit'),mode:$('concert-mode'),stage:$('concert-stage'),phones:$('concert-phones'),copy:$('concert-copy'),count:$('concert-count'),info:$('concert-info'),host:$('concert-host'),invite:$('concert-invite')};
 let concertSocket=null,concertConnected=false,concertAllowed=false,concertFree=false,concertStage=true,concertPhones=true,concertRole='host',concertCount=0;
 const concertParams=new URLSearchParams(location.search);
-if(concertParams.get('concert')==='guest')concertEls.role.value='guest';
+const audienceView = concertParams.get('concert') === 'guest';
+const soloView = !audienceView && concertParams.get('modo') === 'libre';
+const audienceStatus = $('audience-status');
+const audienceRetry = $('audience-retry');
+if (audienceView) concertEls.role.value = 'guest';
 if(concertParams.get('room'))concertEls.room.value=concertParams.get('room').slice(0,24);
 if(concertParams.get('server') && /^wss:\/\//i.test(concertParams.get('server')))concertEls.server.value=concertParams.get('server');
 function concertSay(t){concertEls.info.textContent=t}
+function showAudienceStatus(message, canRetry = false) {
+  if (!audienceView) return;
+  audienceStatus.textContent = message;
+  audienceRetry.hidden = !canRetry;
+}
 function concertSend(obj){if(concertSocket&&concertSocket.readyState===WebSocket.OPEN)concertSocket.send(JSON.stringify(obj))}
 function concertRefresh(){concertRole=concertEls.role.value;concertEls.host.hidden=concertRole!=='host';concertEls.permit.textContent=concertAllowed?'🔓 Audience OPEN':'🔒 Audience CLOSED';concertEls.permit.classList.toggle('on',concertAllowed);concertEls.mode.textContent=concertFree?'🎶 Free orchestra':'🎼 Director mode';concertEls.mode.classList.toggle('on',concertFree);concertEls.stage.checked=concertStage;concertEls.phones.checked=concertPhones;concertEls.count.textContent=concertCount+' / 50 connected';concertEls.connect.textContent=concertConnected?'Disconnect':'Connect';concertEls.role.disabled=concertConnected;concertEls.room.disabled=concertConnected;concertEls.server.disabled=concertConnected}
 function concertInvite(){const u=new URL(location.href);u.search='';u.searchParams.set('concert','guest');u.searchParams.set('room',concertEls.room.value.trim());u.searchParams.set('server',concertEls.server.value.trim());concertEls.invite.textContent='Audience link: '+u.href;return u.href}
@@ -349,17 +381,28 @@ concertEls.server.addEventListener('input',()=>{if(!concertConnected)concertInvi
 concertEls.connect.addEventListener('click',()=>{
  if(concertSocket){concertSocket.close();concertSocket=null;concertConnected=false;concertRefresh();return}
  const server=concertEls.server.value.trim(),room=concertEls.room.value.trim();
- if(!/^wss:\/\//i.test(server)){concertSay('Enter a secure WebSocket address (wss://). GitHub Pages alone cannot host the concert connection.');return}
- if(!room){concertSay('Enter a room name.');return}
+ if(!/^wss:\/\//i.test(server)){showAudienceStatus('El enlace del concierto no tiene un servidor válido.');concertSay('Enter a secure WebSocket address (wss://). GitHub Pages alone cannot host the concert connection.');return}
+ if(!room){showAudienceStatus('El enlace del concierto no indica la sala.');concertSay('Enter a room name.');return}
  try{const ws=new WebSocket(server);concertSocket=ws;concertSay('Connecting…');
+ showAudienceStatus('Conectando al concierto…');
  ws.onopen=()=>{concertConnected=true;concertSend({type:'join',room,role:concertEls.role.value});concertRefresh()};
  ws.onmessage=e=>{let msg;try{msg=JSON.parse(e.data)}catch{return}
- if(msg.type==='state'){concertAllowed=!!msg.allowed;concertFree=!!msg.free;concertStage=!!msg.stage;concertPhones=!!msg.phones;concertCount=Number(msg.count)||0;concertRefresh();concertSay(concertRole==='host'?'Room connected · '+concertCount+' audience phones':'Connected · '+(concertAllowed?'You can play':'Wait for the director'));}
+ if(msg.type==='state'){concertAllowed=!!msg.allowed;concertFree=!!msg.free;concertStage=!!msg.stage;concertPhones=!!msg.phones;concertCount=Number(msg.count)||0;concertRefresh();concertSay(concertRole==='host'?'Room connected · '+concertCount+' audience phones':'Connected · '+(concertAllowed?'You can play':'Wait for the director'));
+ showAudienceStatus(!concertAllowed ? 'Espera a que el director abra la participación.'
+   : concertPhones ? 'Ya puedes tocar.'
+   : concertStage ? 'Ya puedes tocar. El sonido sale por el escenario.'
+   : 'Participación abierta. El director ha silenciado el sonido.');}
  if(msg.type==='note'&&Number.isInteger(msg.i)&&msg.i>=0&&msg.i<17){if(concertRole==='host'&&concertStage){if(init())play(msg.i,true)}else if(concertRole==='guest'&&concertPhones&&concertAllowed&&msg.from!=='self'){if(init())play(msg.i,true)}}
- if(msg.type==='error')concertSay(msg.message||'Connection error');};
+ if(msg.type==='error'){
+   concertSay(msg.message||'Connection error');
+   showAudienceStatus('No se pudo entrar en la sala.');
+ }};
  ws.onerror=()=>concertSay('Server unavailable. Check its address and Internet connection.');
- ws.onclose=()=>{if(concertSocket===ws){concertSocket=null;concertConnected=false;concertCount=0;concertRefresh();concertSay('Disconnected. Local KALIKO still works.')}};
- }catch(e){concertSay('Invalid server address: '+e.message)}
+ ws.onclose=()=>{if(concertSocket===ws){concertSocket=null;concertConnected=false;concertCount=0;concertRefresh();concertSay('Disconnected. Local KALIKO still works.');showAudienceStatus('Se perdió la conexión con el concierto.', true)}};
+ }catch(e){
+   concertSay('Invalid server address: '+e.message);
+   showAudienceStatus('No se pudo conectar con el concierto.', true);
+ }
 });
 concertEls.permit.addEventListener('click',()=>{if(!concertConnected)return concertSay('Connect to the concert server first.');concertSend({type:'control',key:'allowed',value:!concertAllowed})});
 concertEls.mode.addEventListener('click',()=>{if(!concertConnected)return concertSay('Connect to the concert server first.');concertSend({type:'control',key:'free',value:!concertFree})});
@@ -367,22 +410,35 @@ concertEls.stage.addEventListener('change',()=>{if(!concertConnected){concertEls
 concertEls.phones.addEventListener('change',()=>{if(!concertConnected){concertEls.phones.checked=concertPhones;return concertSay('Connect first.')}concertSend({type:'control',key:'phones',value:concertEls.phones.checked})});
 concertEls.copy.addEventListener('click',async()=>{const url=concertInvite();try{await navigator.clipboard.writeText(url);concertSay('Audience link copied. Generate a QR code from this link.')}catch{concertSay('Copy the audience link displayed above.')}});
 concertRefresh();concertInvite();
-// Concert 16: audience links join automatically; the director connects manually.
-// A brief wait allows the page to initialize before opening the socket.
-if(concertParams.get('concert')==='guest'){
-  concertSay('Joining concert room…');
-  setTimeout(()=>{if(!concertConnected&&!concertSocket)concertEls.connect.click()},250);
+// Audience links join automatically. The director connects manually.
+if (audienceView) {
+  document.body.classList.add('audience-view', 'clean-view');
+  concertAllowed = false;
+  audienceRetry.addEventListener('click', () => {
+    concertAllowed = false;
+    concertEls.connect.click();
+  });
+  concertEls.connect.click();
 }
 
 seqButtons();
-update();const viewToggle = $('view-toggle');
-viewToggle.addEventListener('click', () => {
-  const cleanView = document.body.classList.toggle('clean-view');
+update();
+const viewToggle = $('view-toggle');
+function setCleanView(cleanView) {
+  document.body.classList.toggle('clean-view', cleanView);
   viewToggle.setAttribute('aria-pressed', String(cleanView));
   viewToggle.title = cleanView ? 'Volver a los controles' : 'Vista limpia';
   viewToggle.textContent = cleanView ? '↩' : '⛶';
+}
+if (soloView) {
+  document.body.classList.add('solo-view');
+  setCleanView(true);
+}
+viewToggle.addEventListener('click', () => {
+  const cleanView = !document.body.classList.contains('clean-view');
+  setCleanView(cleanView);
   if (!cleanView) {
-    document.querySelector('.instrument').scrollIntoView({ block: 'nearest' });
+    document.querySelector(soloView ? '.toolbar' : '.instrument').scrollIntoView({ block: 'nearest' });
   }
 });
 })();
